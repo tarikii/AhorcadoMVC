@@ -1,0 +1,56 @@
+﻿@model AhorcadoMVC.Models.GameViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<main aria-labelledby="title">
+    <link href="~/css/game.css" rel="stylesheet" type="text/css" />
+
+    <div>
+        <h2 id="title">@Model.Title</h2>
+    </div>
+
+    <div>
+        <div id="BoxesPanel">
+            @for (int i = 0; i < Model.WordLetters.Count; i++)
+            {
+                <span id="letter-box-@i" class="box-class">_</span>
+            }
+        </div>
+    </div>
+
+    <br />
+    <br />
+
+    <div id="ButtonsPanel">
+        @for (int i = 0; i < Model.Alphabet.Count; i++)
+        {
+            if (i > 0 && i % 9 == 0)
+            {
+                <br />
+            }
+            <button id="letter-button-@Model.Alphabet[i]" class="letter-button"
+                    type="button" onclick="checkLetter('@Model.Alphabet[i]')">
+                @Model.Alphabet[i]
+            </button>
+        }
+    </div>
+
+    <br />
+    <br />
+
+    <div>
+        <img id="hangman-image" src="~/img/Ahorcado0.jpg" alt="Hangman" />
+    </div>
+
+</main>
+
+@section Scripts {
+
+    <script>
+        const wordLetters = @Html.Raw(Json.Serialize(Model.WordLetters));
+    </script>
+
+    <script src="~/js/game.js" type="text/javascript"></script>
+}
